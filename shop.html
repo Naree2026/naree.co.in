@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Online - Naree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAF7F2;
+  --dark: #1C1610;
+  --burgundy: #7B2442;
+  --rose: #C4687A;
+  --sage: #5A7A5E;
+  --cream: #F0E9DC;
+  --sand: #D9CBBA;
+  --muted: #8C7B6E;
+  --text: #2E2118;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Outfit', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(250, 247, 242, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(28, 22, 16, 0.08);
+  transition: all 0.3s ease;
+}
+
+nav.scrolled {
+  background: rgba(250, 247, 242, 0.98);
+  box-shadow: 0 2px 24px rgba(123, 36, 66, 0.05);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--burgundy);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--burgundy);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  list-style: none;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(28, 22, 16, 0.12);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li {
+  padding: 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background: var(--cream);
+  color: var(--burgundy);
+}
+
+/* Shop Section */
+.shop-hero {
+  padding: 140px 2rem 80px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--bg) 100%);
+}
+
+.shop-hero h1 {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--burgundy);
+  margin-bottom: 1rem;
+}
+
+.shop-hero p {
+  font-size: 1.2rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.products-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 2rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 24px rgba(123, 36, 66, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(123, 36, 66, 0.12);
+  border-color: var(--rose);
+}
+
+.product-image {
+  width: 100%;
+  height: 300px;
+  background: var(--cream);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  color: var(--burgundy);
+  margin-bottom: 1.5rem;
+}
+
+.product-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--burgundy);
+  margin-bottom: 1rem;
+}
+
+.product-description {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.product-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--cream);
+  border-radius: 8px;
+}
+
+.meta-item {
+  flex: 1;
+}
+
+.meta-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.meta-value {
+  font-weight: 500;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.quantity-section {
+  margin-bottom: 1.5rem;
+}
+
+.quantity-label {
+  display: block;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.quantity-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.quantity-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 2px solid var(--sand);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  transition: all 0.2s ease;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(123, 36, 66, 0.1);
+}
+
+.quantity-input.error {
+  border-color: #D84848;
+}
+
+.error-message {
+  color: #D84848;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.error-message.show {
+  display: block;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--burgundy);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background: var(--rose);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(123, 36, 66, 0.2);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
+}
+
+.cart-summary {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(28, 22, 16, 0.15);
+  min-width: 250px;
+  display: none;
+}
+
+.cart-summary.show {
+  display: block;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cart-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--burgundy);
+  margin-bottom: 1rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--sand);
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.checkout-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--sage);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkout-btn:hover {
+  background: #4a6a4e;
+}
+
+/* Footer */
+footer {
+  background: var(--dark);
+  color: var(--cream);
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--rose);
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--cream);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--rose);
+}
+
+.footer-copy {
+  margin-top: 2rem;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .shop-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .cart-summary {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Naree</a>
+    <ul class="nav-links">
+      <li><a href="index.html#problem">The Problem</a></li>
+      <li><a href="index.html#solution">Our Solution</a></li>
+      <li><a href="index.html#who">Who It's For</a></li>
+      <li><a href="index.html#values">Our Values</a></li>
+      <li class="nav-dropdown">
+        <a href="#">Stock Booking</a>
+        <ul class="dropdown-menu">
+          <li><a href="shop.html">Book Online</a></li>
+          <li><a href="track.html">Track My Orders</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="shop-hero">
+  <h1>Bulk Order Store</h1>
+  <p>Purchase quality menstrual care products in bulk. Minimum order: 25 units per product.</p>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section">
+  <div class="products-grid">
+    
+    <!-- Jute Bag -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="silicon-mold.png" alt="Silicon Mold" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+      </div>
+      <h2 class="product-title">Silicon Mold</h2>
+      <p class="product-description">
+        Naree cellulose liners are ultra-soft, breathable, and designed for all-day comfort with superior absorbency.
+        They come pre-packed in a jute bag with a storage container, offering a hygienic, eco-friendly, and convenient solution for everyday protection.
+      </p>
+      
+      <div class="product-meta">
+        <div class="meta-item">
+          <div class="meta-label">Material</div>
+          <div class="meta-value">100% Silicon</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Min. Order</div>
+          <div class="meta-value">25 Units</div>
+        </div>
+      </div>
+      
+      <div class="quantity-section">
+        <label class="quantity-label" for="jute-quantity">Order Quantity</label>
+        <p class="quantity-note">Enter the number of bags you want to order (minimum 25)</p>
+        <input 
+          type="number" 
+          id="jute-quantity" 
+          class="quantity-input" 
+          placeholder="Enter quantity (min. 25)"
+          min="25"
+          value=""
+        >
+        <div class="error-message" id="jute-error">Minimum order is 25 units.</div>
+      </div>
+      
+      <button class="add-to-cart-btn" onclick="addToCart('jute')">Add to Cart</button>
+    </div>
+    
+    <!-- Cotton Lining Box -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="cotton-box.jpg" alt="Cotton Lining Box" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+      </div>
+      <h2 class="product-title">Cellulose Lining Box</h2>
+      <p class="product-description">
+        Naree cellulose liners are ultra-soft, breathable, and designed for all-day comfort with superior absorbency.
+        Made from natural, eco-friendly materials, they provide a hygienic and sustainable solution for everyday protection.
+      </p>
+      
+      <div class="product-meta">
+        <div class="meta-item">
+          <div class="meta-label">Contents</div>
+          <div class="meta-value">8 Pads/Box</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Min. Order</div>
+          <div class="meta-value">25 Units</div>
+        </div>
+      </div>
+      
+      <div class="quantity-section">
+        <label class="quantity-label" for="cotton-quantity">Order Quantity</label>
+        <p class="quantity-note">Enter the number of boxes you want to order (minimum 25)</p>
+        <input 
+          type="number" 
+          id="cotton-quantity" 
+          class="quantity-input" 
+          placeholder="Enter quantity (min. 25)"
+          min="25"
+          value=""
+        >
+        <div class="error-message" id="cotton-error">Minimum order is 25 units.</div>
+      </div>
+      
+      <button class="add-to-cart-btn" onclick="addToCart('cotton')">Add to Cart</button>
+    </div>
+    
+  </div>
+</section>
+
+<!-- Cart Summary -->
+<div class="cart-summary" id="cart-summary">
+  <h3 class="cart-title">Cart</h3>
+  <div id="cart-items"></div>
+  <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Naree</div>
+  <ul class="footer-links">
+    <li><a href="index.html#problem">The Problem</a></li>
+    <li><a href="index.html#solution">Our Solution</a></li>
+    <li><a href="index.html#who">Who It's For</a></li>
+    <li><a href="index.html#values">Our Values</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Naree. Awareness Initiative.</div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+let cart = {
+  cotton: 0,
+  jute: 0
+};
+
+function validateQuantity(product) {
+  const input = document.getElementById(`${product}-quantity`);
+  const error = document.getElementById(`${product}-error`);
+  const quantity = parseInt(input.value) || 0;
+  
+  if (quantity < 25) {
+    input.classList.add('error');
+    error.classList.add('show');
+    return false;
+  } else {
+    input.classList.remove('error');
+    error.classList.remove('show');
+    return true;
+  }
+}
+
+function addToCart(product) {
+  if (!validateQuantity(product)) {
+    return;
+  }
+  
+  const input = document.getElementById(`${product}-quantity`);
+  const quantity = parseInt(input.value);
+  
+  cart[product] = quantity;
+  updateCartDisplay();
+  
+  // Clear input
+  input.value = '';
+  
+  // Show success feedback
+  const btn = event.target;
+  const originalText = btn.textContent;
+  btn.textContent = '✓ Added to Cart';
+  btn.style.background = 'var(--sage)';
+  
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.style.background = 'var(--burgundy)';
+  }, 2000);
+}
+
+function updateCartDisplay() {
+  const cartSummary = document.getElementById('cart-summary');
+  const cartItems = document.getElementById('cart-items');
+  
+  if (cart.cotton === 0 && cart.jute === 0) {
+    cartSummary.classList.remove('show');
+    return;
+  }
+  
+  cartSummary.classList.add('show');
+  
+  let html = '';
+  
+  if (cart.cotton > 0) {
+    html += `
+      <div class="cart-item">
+        <span>Cotton Lining Box</span>
+        <strong>${cart.cotton} units</strong>
+      </div>
+    `;
+  }
+  
+  if (cart.jute > 0) {
+    html += `
+      <div class="cart-item">
+        <span>Jute Bag</span>
+        <strong>${cart.jute} units</strong>
+      </div>
+    `;
+  }
+  
+  cartItems.innerHTML = html;
+}
+
+function checkout() {
+  const total = cart.cotton + cart.jute;
+  alert(`Thank you for your order!\n\nOrder Summary:\n- Cotton Lining Box: ${cart.cotton} units\n- Jute Bag: ${cart.jute} units\n\nTotal Items: ${total}\n\nA representative will contact you shortly to complete the order.`);
+  
+  // Reset cart
+  cart = { cotton: 0, jute: 0 };
+  updateCartDisplay();
+}
+
+// Add input validation on blur
+document.getElementById('cotton-quantity').addEventListener('blur', () => validateQuantity('cotton'));
+document.getElementById('jute-quantity').addEventListener('blur', () => validateQuantity('jute'));
+
+// Prevent negative numbers
+document.querySelectorAll('.quantity-input').forEach(input => {
+  input.addEventListener('input', function() {
+    if (this.value < 0) this.value = 0;
+  });
+});
+</script>
+
+</body>
+</html>
